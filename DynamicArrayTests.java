@@ -2,12 +2,13 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class DynamicArrayTest {
+public class DynamicArrayTests {
 
     private DynamicArray<Character> a1;
     private DynamicArray<Character> a2;
     private DynamicArray<Character> empty;
     private DynamicArray<Character> s;
+    //have to have data named data for copy constructor
 
     /**
      * Initializes DynamicArray<Character> instances to be used for testing.

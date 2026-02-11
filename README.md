@@ -2,7 +2,7 @@
 
 ## Basic Information
 
-Your name:
+Your name: Abigail Lei
 
 Other students you worked with, including TAs:
 
@@ -19,8 +19,10 @@ If you used generative AI, how did you use it? What role did it play in your lea
 ## Questions to Answer
 
 What is the difference between size and capacity?
+Size is the number of elements in the array, while capacity is how many elements the array can hold. Size will always be less than or equal to capacity.
 
 When do we resize and why?
+We resize when the size of the array is equal
 
 Which operations require shifting and why?
 
