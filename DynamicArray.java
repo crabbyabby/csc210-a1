@@ -1,3 +1,5 @@
+import javax.management.RuntimeErrorException;
+
 /**
  * TODO: Describe what this class represents and how it works at a high level
  *
@@ -172,59 +174,95 @@ public class DynamicArray<T>{
     // this doesn't work LOL
     //`addAll` inserts all the elements of a passed `DynamicArray` at the specified index, returning the result as a new `DynamicArray`.
     public DynamicArray<T> addAll(DynamicArray<T> newArray, int index){
-        if (this.size + newArray.size() > this.capacity){
-            throw new RuntimeException("Capacity reached. Cannot add these Dynamic Arrays together");
+        if (index > this.size || index < 0){
+            throw new IndexOutOfBoundsException("Index must be between 0 and the size of the array.");
         } else {
-            DynamicArray<T> returned = new DynamicArray<T>(this);
-            for (int i = newArray.size() - 1; i >= 0; i--){
-                returned.add(index, newArray.get(i));
+            if (this.size + newArray.size() > this.capacity){
+                throw new RuntimeException("Capacity reached. Cannot add these Dynamic Arrays together");
+            } else {
+                DynamicArray<T> returned = new DynamicArray<T>(this);
+                for (int i = newArray.size() - 1; i >= 0; i--){
+                    returned.add(index, newArray.get(i));
+                }
+                return returned;
             }
-            /** 
-            int newSize = this.size + newArray.size();
-            DynamicArray<T> returned = new DynamicArray<T>(newSize);
+        }
+    }
 
+    //`splitSuffix` returns the elements from a specified index and after as a new `DynamicArray`.
+    public DynamicArray<T> splitSuffix(int index){
+        if (index >= this.size || index < 0){
+            throw new IndexOutOfBoundsException("Invalid index. Index must be between 0 and the size of the array.");
+        } else {
+            DynamicArray<T> returned = new DynamicArray<>(this.size - index);
+            for (int i = index; i < this.size; i++){
+                returned.add(this.get(i));
+            }
+
+            return returned;
+
+        }
+    }
+
+    public DynamicArray<T> splitPrefix(int index){
+        if (index >= this.size || index < 0){
+            throw new IndexOutOfBoundsException("Invalid index. Must be between 0 and the size of the array.");
+        } else {
+            DynamicArray<T> returned = new DynamicArray<>(index);
             for (int i = 0; i < index; i++){
-                returned.add(this.array[i]);
+                returned.add(this.get(i));
             }
 
-            for (int i = index; i < index + newArray.size(); i++){
-                returned.add(this.array[i]);
-            }
-
-            int j = index;
-            for (int i = index + newArray.size(); i < newSize; i++){
-                returned.add(this.array[j]);
-                j++;
-            }
-            */
             return returned;
         }
     }
 
-    public DynamicArray<T> splitSuffix(int index){
-    
-    }
+    //* `delete` removes the elements spanning from the first index up to just before the other, i.e., [fromIndex, toIndex). 
+    // It returns a new DynamicArray with that range removed; the original is unchanged.
 
-    public DynamicArray<T> splitPrefix(int index){
-
-    }
-
+    // array of size 5. delete (1,3) --> delete 2 things.
     public DynamicArray<T> delete(int fromIndex, int toIndex){
+        if (fromIndex >= this.size || fromIndex < 0 || toIndex > this.size || toIndex < 0){
+            throw new IndexOutOfBoundsException("Invalid index. Must be between 0 and the size of the array.");
+        } else if (fromIndex > toIndex) {
+            throw new IndexOutOfBoundsException("fromIndex must be less than toIndex");
+        } else {
+            DynamicArray<T> returned = new DynamicArray<>(size - (toIndex - fromIndex));
+            for (int i = 0; i < fromIndex; i++){
+                returned.add(this.get(i));
+            }
 
+            for (int i = toIndex; i < size(); i++){
+                returned.add(this.get(i));
+            }
+
+            return returned;
+        }
     }
 
     public DynamicArray<T> extract(int fromIndex, int toIndex){
+        if (fromIndex >= this.size || fromIndex < 0 || toIndex > this.size || toIndex < 0){
+            throw new IndexOutOfBoundsException("Invalid index. Must be between 0 and the size of the array.");
+        } else if (fromIndex > toIndex) {
+            throw new IndexOutOfBoundsException("fromIndex must be less than toIndex");
+        } else {
+            DynamicArray<T> returned = new DynamicArray<>((toIndex - fromIndex));
+        
+            for (int i = fromIndex; i < toIndex; i++){
+                returned.add(get(i));
+            }
 
+            return returned;
+        }
     }
 
 
 
 //`append` concatenates a passed `DynamicArray` to the end of the current `DynamicArray` and returns the result as a new `DynamicArray` object.
 
-//`splitSuffix` returns the elements from a specified index and after as a new `DynamicArray`.
+
 // `splitPrefix` returns the elements before a specified index as a new `DynamicArray`.
 
-//* `delete` removes the elements spanning from the first index up to just before the other, i.e., [fromIndex, toIndex). It returns a new DynamicArray with that range removed; the original is unchanged.
 
 //* `extract` returns a new `DynamicArray` containing the elements from one index up to just before another, [fromIndex, toIndex).
 
@@ -252,7 +290,7 @@ public static void main(String args[]){
     nums3 = nums.append(nums2);
     System.out.println(nums3);
 
-    nums4 = nums.addAll(nums2, 2);
+    nums4 = nums.splitPrefix(1);
     System.out.println(nums4);
 
 }
