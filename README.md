@@ -29,11 +29,13 @@ What is the difference between size and capacity?
 Size is the number of elements in the array, while capacity is how many elements the array can hold. Size will always be less than or equal to capacity.
 
 When do we resize and why?
-We resize when the size of the array is equal
+We resize when the size of the array is equal to the capacity and we are still adding new elements into the DynamicArray. This is so the size() < capacity at all times.
 
 Which operations require shifting and why?
-
+Any operation that adds or deletes an element from the middle of the array / not the very end of the array. This includes add (with an index), remove(int index) and addAll.
 
 ## Reflection 
 
 Please provide a brief reflection about your experience with this assignment. What was easiest? What was hardest? How did your understanding of arrays and lists evolve?
+
+This assignment took me a long time, I enjoyed implementing all of the specific functions because it made me understand it better. I had a hard time grasping the concept of the backing array, but after working on it it got better. It was kind of annoying to write a lot of JavaDoc! I had a fun time doing the unit tests again though.
