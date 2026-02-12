@@ -250,11 +250,17 @@ public class DynamicArray<T> implements ListADT<T>{
         if (index > this.size || index < 0){
             throw new IndexOutOfBoundsException("Index must be between 0 and the size of the array.");
         } else {
-            DynamicArray<T> returned = new DynamicArray<T>(this);
-            for (int i = newArray.size() - 1; i >= 0; i--){
-                returned.add(index, newArray.get(i));
-            }
-            return returned;
+        DynamicArray<T> returned = new DynamicArray<T>(this.size + newArray.size());
+        for (int i = 0; i < index; i++) {
+            returned.add(this.get(i));
+        }
+        for (int i = 0; i < newArray.size(); i++) {
+            returned.add(newArray.get(i));
+        }
+        for (int i = index; i < this.size; i++) {
+            returned.add(this.get(i));
+        }
+        return returned;
         }
     }
 
@@ -266,7 +272,7 @@ public class DynamicArray<T> implements ListADT<T>{
      */
     public DynamicArray<T> splitSuffix(int index){
         if (index >= this.size || index < 0){
-            throw new IndexOutOfBoundsException("Invalid index. Index must be between 0 and the size of the array.");
+            throw new IndexOutOfBoundsException("Invalid index.");
         } else {
             DynamicArray<T> returned = new DynamicArray<>(this.size - index);
             for (int i = index; i < this.size; i++){

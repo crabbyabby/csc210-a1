@@ -33,7 +33,7 @@ public interface ListADT<T>{
      * Accesses an element at a specific index, then returns it
      * @param index of element to access
      * @return T - the element at the index
-     * @throws IndexOutOfBoundsException if index is invalid, less than 0 or is greater than / equal to the size
+     * @throws IndexOutOfBoundsException if index is invalid, less than 0 or is greater than the size
      */
     public T get(int index);
 
@@ -41,7 +41,7 @@ public interface ListADT<T>{
      * Replaces the element of a specific index with a new element, T item
      * @param index an integer for the index of the position to change
      * @param value the new element of T type to replace the previous element with.
-     * @throws IndexOutOfBoundsException if index is invalid, less than 0 (negative) or is greater than / equal to size
+     * @throws IndexOutOfBoundsException if index is invalid, less than 0 or is greater than size
      * @throws IndexOutOfBoundsException if list is empty
      * @return the previous element that got replaced
      */
@@ -52,15 +52,13 @@ public interface ListADT<T>{
      * pushes every element after it back an index
      * @param index an integer which is the index of where the new element is added
      * @param value is the element being added, can be many different types
-     * @throws IndexOutOfBoundsException if index is invalid as in less than 0 (negative) or is greater than / equal to size
-     * @throws NullPointerException if element T to replace previous element is null 
+     * @throws IndexOutOfBoundsException if index is invalid as in less than 0 or is greater than size
     */
     public void add(int index, T value);
 
     /**
      * Appends the new element to the end of the list since there is no index
      * @param value the item being added to the list, can be any type
-     * @throws NullPointerException if element T to replace previous element is null
      */
     public void add(T value);
 
@@ -69,9 +67,8 @@ public interface ListADT<T>{
      * Pushes forward each element behind the element that was removed
      * @param index the index of the item to be removed
      * @return the item that was removed from the list
-     * @throws IndexOutOfBoundsException if index is invalid, less than 0 (negative) or is greater than / equal to size
+     * @throws IndexOutOfBoundsException if index is invalid: less than 0 or is greater than size
      * @throws IndexOutOfBoundsException if list is empty
-     * @throws NullPointerException if element T to replace previous element is null
      */
     public T remove(int index);
     
@@ -83,7 +80,8 @@ public interface ListADT<T>{
     public String toString();
 
     /**
-     * Method that adds all elements of passed DynamicArray to end of preexisiting DynamicArray
+     * Method that adds all elements of passed DynamicArray 
+     * to end of preexisiting DynamicArray
      * @param newArray to be appended to the end of existing DynamicArray
      * @return new DynamicArray that is the new array concatenated to old array
      */
@@ -94,7 +92,7 @@ public interface ListADT<T>{
      * @param newArray DynamicArray with elements to be inserted to the current DynamicArray
      * @param index to insert the elements at
      * @return new DynamicArray of the old DynamicArray with the new elements inserted
-     * @throws IndexOutOfBoundsException if index passed is negative or greater than the size of the DynamicArray.
+     * @throws IndexOutOfBoundsException if index is negative or greater than the size of the DynamicArray.
      *      
      */
     public DynamicArray<T> addAll(DynamicArray<T> newArray, int index);
@@ -103,7 +101,7 @@ public interface ListADT<T>{
      * Splits a DynamicArray from a specified index until the end of the DynamicArray
      * @param index to start at to get elements from it until after
      * @return new DynamicArray with all elements from specified index and after
-     * @throws IndexOutOfBoundsException if index passed is negative or greater than the size of the DynamicArray.
+     * @throws IndexOutOfBoundsException if index is negative or greater than the size of the DynamicArray.
      */
     public DynamicArray<T> splitSuffix(int index);
 
@@ -111,7 +109,7 @@ public interface ListADT<T>{
      * Splits a DynamicArray from the beginning until the specified index.
      * @param index that indicates where the splitting should end
      * @return new DynamicArray of just the elements split from old DynamicArray
-     * @throws IndexOutOfBoundsException if index passed is negative or greater than the size of the DynamicArray.
+     * @throws IndexOutOfBoundsException if index passed is negative or greater than size of the DynamicArray.
      */
     public DynamicArray<T> splitPrefix(int index);
 
@@ -120,7 +118,7 @@ public interface ListADT<T>{
      * @param fromIndex starting index to delete (inclusive)
      * @param toIndex ending index to delete (exclusive)
      * @return new DynamicArray without the deleted data
-     * @throws IndexOutOfBoundsException if index passed is negative or greater than the size of the DynamicArray.
+     * @throws IndexOutOfBoundsException if index passed is negative or greater than size of the DynamicArray.
      * @throws IndexOutOfBoundsException if starting index (fromIndex) is after the ending index.
      */
     public DynamicArray<T> delete(int fromIndex, int toIndex);
@@ -130,8 +128,8 @@ public interface ListADT<T>{
      * @param fromIndex starting index to extract from, inclusive
      * @param toIndex ending index to extract from, exclusive
      * @return new DynamicArray with just the elements between fromIndex and toIndex
-     * @throws IndexOutOfBoundsException if index passed is negative or greater than the size of the DynamicArray.
-     * @throws IndexOutOfBoundsException if starting index (fromIndex) is greater than / after the ending index.
+     * @throws IndexOutOfBoundsException if index passed is negative or greater than size of the DynamicArray.
+     * @throws IndexOutOfBoundsException if starting index is greater than the ending index.
      */
     public DynamicArray<T> extract(int fromIndex, int toIndex);
 
