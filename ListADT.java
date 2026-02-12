@@ -8,10 +8,8 @@
  * Only takes one type of element / object, but could be anything such as integers, booleans, etc.
  * Can begin as an empty list, and then elements are added
  * Can begin as a pre-populated list, and then elements are added.
- * Elements can be added to and removed from the list with no problem.
- * @throws TypeError if list is created with multiple different data types inside of it
+ * Elements can be added to and removed from the list with no problem
  */
-
 
 public interface ListADT<T>{
 
@@ -35,20 +33,16 @@ public interface ListADT<T>{
      * Accesses an element at a specific index, then returns it
      * @param index of element to access
      * @return T - the element at the index
-     * @throws IndexOutOfBoundsError if index is invalid, less than 0 or is greater than / equal to the size
-     * @throws IndexOutOfBoundsError if list is empty
-     * @throws NullPointerException if element at the index is null
+     * @throws IndexOutOfBoundsException if index is invalid, less than 0 or is greater than / equal to the size
      */
     public T get(int index);
 
     /**
      * Replaces the element of a specific index with a new element, T item
      * @param index an integer for the index of the position to change
-     * @param item the new element of T type to replace the previous element with.
-     * @throws IndexOutOfBoundsError if index is invalid, less than 0 (negative) or is greater than / equal to size
-     * @throws IndexOutOfBoundsError if list is empty
-     * @throws TypeError if the index is given as a non-integer
-     * @throws NullPointerException if element T to replace previous element is null or doesn't exist
+     * @param value the new element of T type to replace the previous element with.
+     * @throws IndexOutOfBoundsException if index is invalid, less than 0 (negative) or is greater than / equal to size
+     * @throws IndexOutOfBoundsException if list is empty
      */
     public T set(int index, T value);
 
@@ -56,16 +50,15 @@ public interface ListADT<T>{
      * Adds a new element at a specific index
      * pushes every element after it back an index
      * @param index an integer which is the index of where the new element is added
-     * @param item is the element being added, can be many different types
-     * @throws IndexOutOfBoundsError if index is invalid as in less than 0 (negative) or is greater than / equal to size
-     * @throws TypeError if the index is given as a non-integer
+     * @param value is the element being added, can be many different types
+     * @throws IndexOutOfBoundsException if index is invalid as in less than 0 (negative) or is greater than / equal to size
      * @throws NullPointerException if element T to replace previous element is null 
     */
     public void add(int index, T value);
 
     /**
      * Appends the new element to the end of the list since there is no index
-     * @param item: the item being added to the list, can be any type
+     * @param value the item being added to the list, can be any type
      * @throws NullPointerException if element T to replace previous element is null
      */
     public void add(T value);
@@ -75,30 +68,72 @@ public interface ListADT<T>{
      * Pushes forward each element behind the element that was removed
      * @param index the index of the item to be removed
      * @return the item that was removed from the list
-     * @throws IndexOutOfBoundsError if index is invalid, less than 0 (negative) or is greater than / equal to size
-     * @throws IndexOutOfBoundsError if list is empty
-     * @throws TypeError if the index is given as a non-integer
+     * @throws IndexOutOfBoundsException if index is invalid, less than 0 (negative) or is greater than / equal to size
+     * @throws IndexOutOfBoundsException if list is empty
      * @throws NullPointerException if element T to replace previous element is null
      */
     public T remove(int index);
     
+
+    /**
+     * toString printing method that formats the dynamic array nicely
+     * @return String of dyanmic array in format with brackets and commas
+     */
     public String toString();
 
+    /**
+     * Method that adds all elements of passed DynamicArray to end of preexisiting DynamicArray
+     * @param newArray to be appended to the end of existing DynamicArray
+     * @return new DynamicArray that is the new array concatenated to old array
+     */
     public DynamicArray<T> append(DynamicArray<T> newArray);
 
+     /**
+     * Inserts the elements of a DynamicArray at the index
+     * @param newArray DynamicArray with elements to be inserted to the current DynamicArray
+     * @param index to insert the elements at
+     * @return new DynamicArray of the old DynamicArray with the new elements inserted
+     * @throws IndexOutOfBoundsException if index passed is negative or greater than the size of the DynamicArray.
+     *      
+     */
     public DynamicArray<T> addAll(DynamicArray<T> newArray, int index);
 
+     /**
+     * Splits a DynamicArray from a specified index until the end of the DynamicArray
+     * @param index to start at to get elements from it until after
+     * @return new DynamicArray with all elements from specified index and after
+     * @throws IndexOutOfBoundsException if index passed is negative or greater than the size of the DynamicArray.
+     */
     public DynamicArray<T> splitSuffix(int index);
 
+     /**
+     * Splits a DynamicArray from the beginning until the specified index.
+     * @param index that indicates where the splitting should end
+     * @return new DynamicArray of just the elements split from old DynamicArray
+     * @throws IndexOutOfBoundsException if index passed is negative or greater than the size of the DynamicArray.
+     */
     public DynamicArray<T> splitPrefix(int index);
 
+    /**
+     * Removes elements between certain indicies
+     * @param fromIndex starting index to delete (inclusive)
+     * @param toIndex ending index to delete (exclusive)
+     * @return new DynamicArray without the deleted data
+     * @throws IndexOutOfBoundsException if index passed is negative or greater than the size of the DynamicArray.
+     * @throws IndexOutOfBoundsException if starting index (fromIndex) is after the ending index.
+     */
     public DynamicArray<T> delete(int fromIndex, int toIndex);
 
+    /**
+     * Takes elements from a specified starting index to ending index and puts in new DynamicArray
+     * @param fromIndex starting index to extract from, inclusive
+     * @param toIndex ending index to extract from, exclusive
+     * @return new DynamicArray with just the elements between fromIndex and toIndex
+     * @throws IndexOutOfBoundsException if index passed is negative or greater than the size of the DynamicArray.
+     * @throws IndexOutOfBoundsException if starting index (fromIndex) is greater than / after the ending index.
+     */
     public DynamicArray<T> extract(int fromIndex, int toIndex);
 
-    public static void main(String args[]){
-    
-}
 }
 
 

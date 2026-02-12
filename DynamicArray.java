@@ -1,4 +1,4 @@
-import javax.management.RuntimeErrorException;
+import javax.management.RuntimeƒthrowException;
 
 /**
  * DynamicArray is a list-like data structure that stores elements in a backing array.
@@ -201,7 +201,7 @@ public class DynamicArray<T> implements ListADT<T>{
 
     /**
      * toString printing method that formats the dynamic array nicely
-     * @returns String of dyanmic array in format with brackets and commas
+     * @return String of dyanmic array in format with brackets and commas
      */
     public String toString(){
         String printed = "[";
@@ -280,8 +280,8 @@ public class DynamicArray<T> implements ListADT<T>{
 
     /**
      * Splits a DynamicArray from the beginning until the specified index.
-     * @param index
-     * @return
+     * @param index that indicates where the splitting should end
+     * @return new DynamicArray of just the elements split from old DynamicArray
      * @throws IndexOutOfBoundsException if index passed is negative or greater than the size of the DynamicArray.
      */
     public DynamicArray<T> splitPrefix(int index){
@@ -299,9 +299,9 @@ public class DynamicArray<T> implements ListADT<T>{
 
     /**
      * Removes elements between certain indicies
-     * @param fromIndex
-     * @param toIndex
-     * @return
+     * @param fromIndex starting index to delete (inclusive)
+     * @param toIndex ending index to delete (exclusive)
+     * @return new DynamicArray without the deleted data
      * @throws IndexOutOfBoundsException if index passed is negative or greater than the size of the DynamicArray.
      * @throws IndexOutOfBoundsException if starting index (fromIndex) is after the ending index.
      */
