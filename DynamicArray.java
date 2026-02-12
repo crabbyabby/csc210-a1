@@ -339,8 +339,7 @@ public class DynamicArray<T>{
         }
     }
 
-
-public static void main(String args[]){
+    public static void main(String args[]){
     DynamicArray<Integer> nums = new DynamicArray<Integer>(8);
     DynamicArray<Integer> nums2 = new DynamicArray<Integer>(8); 
     DynamicArray<Integer> nums3;
@@ -369,4 +368,8 @@ public static void main(String args[]){
 
 }
 }
+
+
+
+
 

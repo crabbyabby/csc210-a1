@@ -82,8 +82,9 @@ public interface ListADT<T>{
      */
     public T remove(int index);
 
-}
-
-public static void main(String args[]){
+    public static void main(String args[]){
     
 }
+}
+
+
