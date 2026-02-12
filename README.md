@@ -5,13 +5,18 @@
 Your name: Abigail Lei
 
 Other students you worked with, including TAs:
+Claire Newcombe
 
 If anyone was particularly helpful, please give them a shout-out here: 
-
+Claire Newcombe
 
 ## References
 
 Any references or resources used besides JavaDoc and course materials:
+https://www.geeksforgeeks.org/java/generics-in-java/
+https://www.w3schools.com/java/ref_keyword_implements.asp
+https://www.geeksforgeeks.org/java/copy-constructor-in-java/
+https://www.w3schools.com/java/java_arraylist.asp
 
 If you used generative AI, how did you use it? What role did it play in your learning?
 

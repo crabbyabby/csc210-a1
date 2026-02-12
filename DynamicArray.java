@@ -8,16 +8,28 @@ import javax.management.RuntimeErrorException;
  */
 public class DynamicArray<T>{
 
+    // Attributes
     private int capacity;
     private int size;
     private T[] array;
 
+    /**
+     * Constructs a new DynamicArray with a specific capacity.
+     * Sets the size to 0 as it always initiates empty, creates backing array
+     * @param capacity integer that specifies how many elements the array can hold.
+     */
     public DynamicArray(int capacity){
         this.capacity = capacity;
         this.size = 0;
         this.array = makeArray(this.capacity);
     }
 
+    /**
+     * Copy constructor that creates a deep copy of the passed in DynamicArray
+     * Copies size and capacity from the oldArray but creates a new backing array
+     * Copies data over from oldArray
+     * @param oldArray the DynamicArray to be copied
+     */
     public DynamicArray(DynamicArray<T> oldArray){
         this.capacity = oldArray.capacity;
         this.array = makeArray(this.capacity);
@@ -67,31 +79,49 @@ public class DynamicArray<T>{
     }
 
     /**
-     * 
-     * @param index
+     * Getter a specific element in the Dynamic Array based on index
+     * @param index int of the element to get
      * @return element of type T
-     * @throws 
+     * @throws IndexOutOfBoundsException if the index is invalid (negative or greater than the array's size)
      */
     T get(int index){
             if (index >= 0 && index < size()){
                 return this.array[index]; 
             } else {
-                throw new IndexOutOfBoundsException("Invalid index.");
+                throw new IndexOutOfBoundsException("Invalid index. Index must be between 0 and the size of the Dynamic Array");
             }
     }
 
+    /**
+     * Setter that changes a specific element of the Dynamic Array in place with inputted information
+     * @param index of the element to change
+     * @param value of same type of the Dynamic Array to replace the current elemt
+     * @return the previous element  
+     * @throws IndexOutOfBoundsException if the index is negative or greater than size + 1 of the DynamicArray (same as add)
+     */
     T set(int index, T value){
         T returned;
             if (index >= 0 && index < size()){
                 returned = this.array[index];
                 this.array[index] = value;
                 return returned;
+            } else if (index == size() + 1) {
+                this.array[index] = value;
+                size++;
+                return null;
             } else {
-                throw new IndexOutOfBoundsException("Invalid index.");
+                throw new IndexOutOfBoundsException("Invalid index. Index must be between 0 and the size + 1 of the Dynamic Array");
             }
     }
 
-   
+   /**
+    * Method that adds an element at a specific index
+    * Pushes other elements one index up
+    * @param index to add the element in
+    * @param value to add into the Dynamic Array
+    * @throws RuntimeException if size same as capacity
+    * @throws IndexOutOfBoundsException if the index is negative or greater than the size
+    */
     void add(int index, T value){
         if (index > 0 && index <= size()){
             if (size() < capacity){
@@ -109,6 +139,11 @@ public class DynamicArray<T>{
         }
     }
 
+    /**
+     * Method that adds element to the end of the Dynamic Array
+     * @param value of same type to add in to the dynamic array
+     * @throws RuntimeException if size already equals capacity and Dynamic Array is full
+     */
     void add(T value){
             if (size() < capacity){
                 this.array[size] = value;
@@ -118,6 +153,14 @@ public class DynamicArray<T>{
             }
     }
 
+    /**
+     * Method that removes an element from an array
+     * Moves down elements in indexes above
+     * @param index 
+     * @return element that is removed
+     * @throws RuntimeException
+     * @throws IndexOutOfBoundsException
+     */
     T remove(int index){
         T returned;
             if (index > 0 && index <= size()){
@@ -138,6 +181,10 @@ public class DynamicArray<T>{
             }
     }
 
+    /**
+     * toString printing method that formats the dynamic array nicely
+     * @returns String of dyanmic array in format with brackets and commas
+     */
     public String toString(){
         String printed = "[";
         String returned = "";
@@ -152,6 +199,12 @@ public class DynamicArray<T>{
         }
     }
 
+    /**
+     * Method that adds all elements of passed DynamicArray to end of preexisiting DynamicArray
+     * @param newArray to be appended to the end of existing DynamicArray
+     * @return new DynamicArray that is the new array concatenated to old array
+     * @throws RuntimeException if size of current DynamicArray and size of concatenated Dynamic together is greater than the current DynamicArrays capacity.
+     */
     public DynamicArray<T> append(DynamicArray<T> newArray){
         if (this.size + newArray.size() > this.capacity){
             throw new RuntimeException("Capacity reached. Cannot add these Dynamic Arrays together");
@@ -171,8 +224,15 @@ public class DynamicArray<T>{
         }
     } 
 
-    // this doesn't work LOL
-    //`addAll` inserts all the elements of a passed `DynamicArray` at the specified index, returning the result as a new `DynamicArray`.
+
+    /**
+     * Inserts the elements of a DynamicArray at the index
+     * @param newArray DynamicArray with elements to be inserted to the current DynamicArray
+     * @param index to insert the elements at
+     * @return new DynamicArray of the old DynamicArray with the new elements inserted
+     * @throws IndexOutOfBoundsException if index passed is negative or greater than the size of the DynamicArray.
+     * @throws RuntimeException if size of old DynamicArray and new DynamicArray together is greater than capacity
+     */
     public DynamicArray<T> addAll(DynamicArray<T> newArray, int index){
         if (index > this.size || index < 0){
             throw new IndexOutOfBoundsException("Index must be between 0 and the size of the array.");
@@ -189,7 +249,12 @@ public class DynamicArray<T>{
         }
     }
 
-    //`splitSuffix` returns the elements from a specified index and after as a new `DynamicArray`.
+    /**
+     * Splits a DynamicArray from a specified index until the end of the DynamicArray
+     * @param index to start at to get elements from it until after
+     * @return new DynamicArray with all elements from specified index and after
+     * @throws IndexOutOfBoundsException if index passed is negative or greater than the size of the DynamicArray.
+     */
     public DynamicArray<T> splitSuffix(int index){
         if (index >= this.size || index < 0){
             throw new IndexOutOfBoundsException("Invalid index. Index must be between 0 and the size of the array.");
@@ -204,6 +269,12 @@ public class DynamicArray<T>{
         }
     }
 
+    /**
+     * Splits a DynamicArray from the beginning until the specified index.
+     * @param index
+     * @return
+     * @throws IndexOutOfBoundsException if index passed is negative or greater than the size of the DynamicArray.
+     */
     public DynamicArray<T> splitPrefix(int index){
         if (index >= this.size || index < 0){
             throw new IndexOutOfBoundsException("Invalid index. Must be between 0 and the size of the array.");
@@ -217,10 +288,14 @@ public class DynamicArray<T>{
         }
     }
 
-    //* `delete` removes the elements spanning from the first index up to just before the other, i.e., [fromIndex, toIndex). 
-    // It returns a new DynamicArray with that range removed; the original is unchanged.
-
-    // array of size 5. delete (1,3) --> delete 2 things.
+    /**
+     * Removes elements between certain indicies
+     * @param fromIndex
+     * @param toIndex
+     * @return
+     * @throws IndexOutOfBoundsException if index passed is negative or greater than the size of the DynamicArray.
+     * @throws IndexOutOfBoundsException if starting index (fromIndex) is after the ending index.
+     */
     public DynamicArray<T> delete(int fromIndex, int toIndex){
         if (fromIndex >= this.size || fromIndex < 0 || toIndex > this.size || toIndex < 0){
             throw new IndexOutOfBoundsException("Invalid index. Must be between 0 and the size of the array.");
@@ -240,6 +315,14 @@ public class DynamicArray<T>{
         }
     }
 
+    /**
+     * Takes elements from a specified starting index to ending index and puts in new DynamicArray
+     * @param fromIndex starting index to extract from, inclusive
+     * @param toIndex ending index to extract from, exclusive
+     * @return new DynamicArray with just the elements between fromIndex and toIndex
+     * @throws IndexOutOfBoundsException if index passed is negative or greater than the size of the DynamicArray.
+     * @throws IndexOutOfBoundsException if starting index (fromIndex) is greater than / after the ending index.
+     */
     public DynamicArray<T> extract(int fromIndex, int toIndex){
         if (fromIndex >= this.size || fromIndex < 0 || toIndex > this.size || toIndex < 0){
             throw new IndexOutOfBoundsException("Invalid index. Must be between 0 and the size of the array.");
@@ -256,15 +339,6 @@ public class DynamicArray<T>{
         }
     }
 
-
-
-//`append` concatenates a passed `DynamicArray` to the end of the current `DynamicArray` and returns the result as a new `DynamicArray` object.
-
-
-// `splitPrefix` returns the elements before a specified index as a new `DynamicArray`.
-
-
-//* `extract` returns a new `DynamicArray` containing the elements from one index up to just before another, [fromIndex, toIndex).
 
 public static void main(String args[]){
     DynamicArray<Integer> nums = new DynamicArray<Integer>(8);
