@@ -43,6 +43,7 @@ public interface ListADT<T>{
      * @param value the new element of T type to replace the previous element with.
      * @throws IndexOutOfBoundsException if index is invalid, less than 0 (negative) or is greater than / equal to size
      * @throws IndexOutOfBoundsException if list is empty
+     * @return the previous element that got replaced
      */
     public T set(int index, T value);
 

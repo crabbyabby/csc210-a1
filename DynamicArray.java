@@ -51,8 +51,8 @@ public class DynamicArray<T> implements ListADT<T>{
      * Creates a new generic array of the given capacity.
      * <p>
      * Java does not allow direct creation of generic arrays. This helper method
-     * safely encapsulates the required cast and suppresses the expected unchecked
-     * cast warning.
+     * safely encapsulates the required cast and suppresses the 
+     * expected unchecked cast warning.
      *
      * @param capacity the desired length of the array
      * @return a new array of type T[] with the given capacity
@@ -101,7 +101,7 @@ public class DynamicArray<T> implements ListADT<T>{
      * Setter that changes a specific element of the Dynamic Array in place with inputted information
      * @param index of the element to change
      * @param value of same type of the Dynamic Array to replace the current elemt
-     * @return the previous element  
+     * @return the previous element that got replaced
      * @throws IndexOutOfBoundsException if the index is negative or greater than size + 1 of the DynamicArray
      */
     public T set(int index, T value){
@@ -348,38 +348,6 @@ public class DynamicArray<T> implements ListADT<T>{
         }
     }
 
-    public static void main(String args[]){
-    DynamicArray<Integer> nums = new DynamicArray<Integer>(1);
-    DynamicArray<Integer> nums2 = new DynamicArray<Integer>(8); 
-    DynamicArray<Integer> nums3;
-    DynamicArray<Integer> nums4;
-    DynamicArray<String> strings = new DynamicArray<String>(5);
-    strings.add("hi");
-    strings.add("bye");
-    nums.add(1);
-    nums.add(2);
-    nums.add(3);
-    nums.add(4);
-    System.out.println("------------------");
-    nums.add(1, 555); 
-    System.out.println(nums);
-    System.out.println("------------------");
-
-    nums.remove(0);
-
-    nums2.add(-1);
-    nums.remove(2);
-    System.out.println(nums);
-    System.out.println(nums2);
-    //nums2.add(-50);
-
-    nums3 = nums.append(nums2);
-    //System.out.println(nums3);
-
-    nums4 = nums.splitPrefix(1);
-    //System.out.println(nums4);
-
-}
 }
 
 
