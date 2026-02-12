@@ -16,7 +16,7 @@ public class DynamicArray<T> implements ListADT<T>{
     // Attributes
     private int capacity;
     private int size;
-    private T[] array;
+    private T[] data;
 
     /**
      * Constructs a new DynamicArray with a specific capacity.
@@ -26,7 +26,7 @@ public class DynamicArray<T> implements ListADT<T>{
     public DynamicArray(int capacity){
         this.capacity = capacity;
         this.size = 0;
-        this.array = makeArray(this.capacity);
+        this.data = makeArray(this.capacity);
     }
 
     /**
@@ -37,12 +37,12 @@ public class DynamicArray<T> implements ListADT<T>{
      */
     public DynamicArray(DynamicArray<T> oldArray){
         this.capacity = oldArray.capacity;
-        this.array = makeArray(this.capacity);
+        this.data = makeArray(this.capacity);
         this.size = oldArray.size();
 
         if (this.size > 0){
             for (int i = 0; i < this.size; i++){
-                this.array[i] = oldArray.get(i);
+                this.data[i] = oldArray.get(i);
             }
         }
     }
@@ -91,9 +91,9 @@ public class DynamicArray<T> implements ListADT<T>{
      */
     public T get(int index){
             if (index >= 0 && index < size()){
-                return this.array[index]; 
+                return this.data[index]; 
             } else {
-                throw new IndexOutOfBoundsException("Invalid index. Index must be between 0 and the size of the Dynamic Array");
+                throw new IndexOutOfBoundsException("Invalid index.");
             }
     }
 
@@ -102,20 +102,20 @@ public class DynamicArray<T> implements ListADT<T>{
      * @param index of the element to change
      * @param value of same type of the Dynamic Array to replace the current elemt
      * @return the previous element  
-     * @throws IndexOutOfBoundsException if the index is negative or greater than size + 1 of the DynamicArray (same as add)
+     * @throws IndexOutOfBoundsException if the index is negative or greater than size + 1 of the DynamicArray
      */
     public T set(int index, T value){
         T returned;
             if (index >= 0 && index < size()){
-                returned = this.array[index];
-                this.array[index] = value;
+                returned = this.data[index];
+                this.data[index] = value;
                 return returned;
             } else if (index == size() + 1) {
-                this.array[index] = value;
+                this.data[index] = value;
                 size++;
                 return null;
             } else {
-                throw new IndexOutOfBoundsException("Invalid index. Index must be between 0 and the size + 1 of the Dynamic Array");
+                throw new IndexOutOfBoundsException("Invalid index.");
             }
     }
 
@@ -130,21 +130,21 @@ public class DynamicArray<T> implements ListADT<T>{
         if (index >= 0 && index <= size()){
             if (size() < this.capacity){
                 for (int i = this.size - 1; i >= index; i--){
-                    this.array[i+1] = this.array[i];
+                    this.data[i+1] = this.data[i];
                 }
-                this.array[index] = value;
+                this.data[index] = value;
                 this.size++;
 
             } else {
                 this.capacity++;
                 T[] newArray = makeArray(this.capacity);
-                System.arraycopy(this.array, 0, newArray, 0, size);
-                this.array = newArray;
+                System.arraycopy(this.data, 0, newArray, 0, size);
+                this.data = newArray;
                 for (int i = this.size - 1; i >= index; i--){
-                    this.array[i+1] = this.array[i];
+                    this.data[i+1] = this.data[i];
                 }
 
-                this.array[index] = value;
+                this.data[index] = value;
                 this.size++;
             }
         } else {
@@ -158,15 +158,15 @@ public class DynamicArray<T> implements ListADT<T>{
      */
     public void add(T value){
         if (size() < this.capacity){
-            this.array[this.size] = value;
+            this.data[this.size] = value;
             size += 1;
         } else if (size() == this.capacity){
             this.capacity++;
             T[] newArray = makeArray(this.capacity);
-            System.arraycopy(this.array, 0, newArray, 0, size);
-            this.array = newArray;
+            System.arraycopy(this.data, 0, newArray, 0, size);
+            this.data = newArray;
 
-            this.array[this.size] = value;
+            this.data[this.size] = value;
             this.size++;
         }
     }
@@ -183,11 +183,11 @@ public class DynamicArray<T> implements ListADT<T>{
         T returned;
             if (index >= 0 && index < size()){
                 if (size() > 0){
-                    returned = this.array[index];
-                    for (int i = index; i < size; i++){  
-                        this.array[i] = this.array[i+1];
+                    returned = this.data[index];
+                    for (int i = index; i < this.size-1; i++){  
+                        this.data[i] = this.data[i+1];
                     }
-                    this.array[size] = null;
+                    this.data[size-1] = null;
                     this.size--;
                     return returned;
                     
@@ -210,7 +210,7 @@ public class DynamicArray<T> implements ListADT<T>{
             return "[]";
         } else {
             for (int i = 0; i < this.size; i++){
-                printed += this.array[i].toString() + ", ";
+                printed += this.data[i].toString() + ", ";
             }
             returned = printed.substring(0, (printed.length()-2)) + "]";
             return returned;
@@ -227,7 +227,7 @@ public class DynamicArray<T> implements ListADT<T>{
         DynamicArray<T> returned = new DynamicArray<T>(newSize);
 
         for (int i = 0; i < this.size; i++){
-            returned.add(this.array[i]);
+            returned.add(this.data[i]);
         }
         int j = 0;
         for (int i = this.size; i < newSize; i++){
@@ -365,8 +365,13 @@ public class DynamicArray<T> implements ListADT<T>{
     System.out.println(nums);
     System.out.println("------------------");
 
+    nums.remove(0);
+
     nums2.add(-1);
-    nums2.add(-50);
+    nums.remove(2);
+    System.out.println(nums);
+    System.out.println(nums2);
+    //nums2.add(-50);
 
     nums3 = nums.append(nums2);
     //System.out.println(nums3);

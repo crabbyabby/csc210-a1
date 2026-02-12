@@ -35,7 +35,7 @@ public interface ListADT<T>{
      * Accesses an element at a specific index, then returns it
      * @param index of element to access
      * @return T - the element at the index
-     * @throws IndexOutOfBoundsError if index is invalid as in less than 0 (negative) or is greater than / equal to the size
+     * @throws IndexOutOfBoundsError if index is invalid, less than 0 or is greater than / equal to the size
      * @throws IndexOutOfBoundsError if list is empty
      * @throws NullPointerException if element at the index is null
      */
