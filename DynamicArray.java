@@ -66,7 +66,7 @@ public class DynamicArray<T> implements ListADT<T>{
      * Accessor for the size of the array.
      * @return int of the arrays size
      */
-    int size(){
+    public int size(){
         return this.size;
     }
 
@@ -74,7 +74,7 @@ public class DynamicArray<T> implements ListADT<T>{
      * Method that tells us if the array is empty or not
      * @return true if the array's size is 0, false if it is greater than 0
      */
-    boolean isEmpty(){
+    public boolean isEmpty(){
         if (size() == 0){
             return true;
         }
@@ -89,7 +89,7 @@ public class DynamicArray<T> implements ListADT<T>{
      * @return element of type T
      * @throws IndexOutOfBoundsException if the index is invalid (negative or greater than the array's size)
      */
-    T get(int index){
+    public T get(int index){
             if (index >= 0 && index < size()){
                 return this.array[index]; 
             } else {
@@ -104,7 +104,7 @@ public class DynamicArray<T> implements ListADT<T>{
      * @return the previous element  
      * @throws IndexOutOfBoundsException if the index is negative or greater than size + 1 of the DynamicArray (same as add)
      */
-    T set(int index, T value){
+    public T set(int index, T value){
         T returned;
             if (index >= 0 && index < size()){
                 returned = this.array[index];
@@ -127,7 +127,7 @@ public class DynamicArray<T> implements ListADT<T>{
     * @throws RuntimeException if size same as capacity
     * @throws IndexOutOfBoundsException if the index is negative or greater than the size
     */
-    void add(int index, T value){
+    public void add(int index, T value){
         if (index > 0 && index <= size()){
             if (size() < capacity){
                 for (int i = this.size - 1; i >= index; i--){
@@ -149,7 +149,7 @@ public class DynamicArray<T> implements ListADT<T>{
      * @param value of same type to add in to the dynamic array
      * @throws RuntimeException if size already equals capacity and Dynamic Array is full
      */
-    void add(T value){
+    public void add(T value){
             if (size() < capacity){
                 this.array[size] = value;
                 size += 1;
@@ -166,7 +166,7 @@ public class DynamicArray<T> implements ListADT<T>{
      * @throws RuntimeException
      * @throws IndexOutOfBoundsException
      */
-    T remove(int index){
+    public T remove(int index){
         T returned;
             if (index > 0 && index <= size()){
                 if (size() > 0){
