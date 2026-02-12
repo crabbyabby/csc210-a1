@@ -4,7 +4,7 @@ import javax.management.RuntimeErrorException;
  * DynamicArray is a list-like data structure that stores elements in a backing array.
  * The DynamicArray holds a reference to the backing array.
  * It keeps track of the number of elements currently stored.
- * Elements can be accessed, added, removed, or modified by index, but the overall capacity cannot be changed.
+ * Elements can be accessed, added, removed, or modified by index.
  *
  * @param <T> The type of elements stored in the array. Can be any primitive or object.
  * Each DynamicArray's elements must all be the same type.
@@ -124,20 +124,28 @@ public class DynamicArray<T> implements ListADT<T>{
     * Pushes other elements one index up
     * @param index to add the element in
     * @param value to add into the Dynamic Array
-    * @throws RuntimeException if size same as capacity
     * @throws IndexOutOfBoundsException if the index is negative or greater than the size
     */
     public void add(int index, T value){
-        if (index > 0 && index <= size()){
-            if (size() < capacity){
+        if (index >= 0 && index <= size()){
+            if (size() < this.capacity){
                 for (int i = this.size - 1; i >= index; i--){
-                    array[i+1] = array[i];
+                    this.array[i+1] = this.array[i];
                 }
-                array[index] = value;
+                this.array[index] = value;
                 this.size++;
 
             } else {
-                throw new RuntimeException("Cannot add anymore items, capacity reached.");
+                this.capacity++;
+                T[] newArray = makeArray(this.capacity);
+                System.arraycopy(this.array, 0, newArray, 0, size);
+                this.array = newArray;
+                for (int i = this.size - 1; i >= index; i--){
+                    this.array[i+1] = this.array[i];
+                }
+
+                this.array[index] = value;
+                this.size++;
             }
         } else {
             throw new IndexOutOfBoundsException("Invalid index.");
@@ -147,35 +155,40 @@ public class DynamicArray<T> implements ListADT<T>{
     /**
      * Method that adds element to the end of the Dynamic Array
      * @param value of same type to add in to the dynamic array
-     * @throws RuntimeException if size already equals capacity and Dynamic Array is full
      */
     public void add(T value){
-            if (size() < capacity){
-                this.array[size] = value;
-                size += 1;
-            } else {
-                throw new RuntimeException("Cannot add anymore items, capacity reached.");
-            }
+        if (size() < this.capacity){
+            this.array[this.size] = value;
+            size += 1;
+        } else if (size() == this.capacity){
+            this.capacity++;
+            T[] newArray = makeArray(this.capacity);
+            System.arraycopy(this.array, 0, newArray, 0, size);
+            this.array = newArray;
+
+            this.array[this.size] = value;
+            this.size++;
+        }
     }
 
     /**
-     * Method that removes an element from an array
+     * Method that removes an element from a DynamicArray
      * Moves down elements in indexes above
-     * @param index 
+     * @param index of element to be removed
      * @return element that is removed
-     * @throws RuntimeException
-     * @throws IndexOutOfBoundsException
+     * @throws RuntimeException if the DynamicArray is empty
+     * @throws IndexOutOfBoundsException if the index is negative or greater than the DynamicArray's size
      */
     public T remove(int index){
         T returned;
-            if (index > 0 && index <= size()){
+            if (index >= 0 && index < size()){
                 if (size() > 0){
                     returned = this.array[index];
                     for (int i = index; i < size; i++){  
                         this.array[i] = this.array[i+1];
                     }
                     this.array[size] = null;
-                    size--;
+                    this.size--;
                     return returned;
                     
                 } else {
@@ -208,25 +221,20 @@ public class DynamicArray<T> implements ListADT<T>{
      * Method that adds all elements of passed DynamicArray to end of preexisiting DynamicArray
      * @param newArray to be appended to the end of existing DynamicArray
      * @return new DynamicArray that is the new array concatenated to old array
-     * @throws RuntimeException if size of current DynamicArray and size of concatenated Dynamic together is greater than the current DynamicArrays capacity.
      */
     public DynamicArray<T> append(DynamicArray<T> newArray){
-        if (this.size + newArray.size() > this.capacity){
-            throw new RuntimeException("Capacity reached. Cannot add these Dynamic Arrays together");
-        } else {
-            int newSize = this.size + newArray.size();
-            DynamicArray<T> returned = new DynamicArray<T>(newSize);
+        int newSize = this.size + newArray.size();
+        DynamicArray<T> returned = new DynamicArray<T>(newSize);
 
-            for (int i = 0; i < this.size; i++){
-                returned.add(this.array[i]);
-            }
-            int j = 0;
-            for (int i = this.size; i < newSize; i++){
-                returned.add(newArray.get(j));
-                j++;
-            }
-            return returned;
+        for (int i = 0; i < this.size; i++){
+            returned.add(this.array[i]);
         }
+        int j = 0;
+        for (int i = this.size; i < newSize; i++){
+            returned.add(newArray.get(j));
+            j++;
+        }
+        return returned;
     } 
 
 
@@ -236,21 +244,17 @@ public class DynamicArray<T> implements ListADT<T>{
      * @param index to insert the elements at
      * @return new DynamicArray of the old DynamicArray with the new elements inserted
      * @throws IndexOutOfBoundsException if index passed is negative or greater than the size of the DynamicArray.
-     * @throws RuntimeException if size of old DynamicArray and new DynamicArray together is greater than capacity
+     *      
      */
     public DynamicArray<T> addAll(DynamicArray<T> newArray, int index){
         if (index > this.size || index < 0){
             throw new IndexOutOfBoundsException("Index must be between 0 and the size of the array.");
         } else {
-            if (this.size + newArray.size() > this.capacity){
-                throw new RuntimeException("Capacity reached. Cannot add these Dynamic Arrays together");
-            } else {
-                DynamicArray<T> returned = new DynamicArray<T>(this);
-                for (int i = newArray.size() - 1; i >= 0; i--){
-                    returned.add(index, newArray.get(i));
-                }
-                return returned;
+            DynamicArray<T> returned = new DynamicArray<T>(this);
+            for (int i = newArray.size() - 1; i >= 0; i--){
+                returned.add(index, newArray.get(i));
             }
+            return returned;
         }
     }
 
@@ -345,7 +349,7 @@ public class DynamicArray<T> implements ListADT<T>{
     }
 
     public static void main(String args[]){
-    DynamicArray<Integer> nums = new DynamicArray<Integer>(8);
+    DynamicArray<Integer> nums = new DynamicArray<Integer>(1);
     DynamicArray<Integer> nums2 = new DynamicArray<Integer>(8); 
     DynamicArray<Integer> nums3;
     DynamicArray<Integer> nums4;
@@ -356,20 +360,19 @@ public class DynamicArray<T> implements ListADT<T>{
     nums.add(2);
     nums.add(3);
     nums.add(4);
+    System.out.println("------------------");
+    nums.add(1, 555); 
     System.out.println(nums);
-    nums.add(1, 555); // 
-    System.out.println(nums.size());
-
     System.out.println("------------------");
 
     nums2.add(-1);
     nums2.add(-50);
 
     nums3 = nums.append(nums2);
-    System.out.println(nums3);
+    //System.out.println(nums3);
 
     nums4 = nums.splitPrefix(1);
-    System.out.println(nums4);
+    //System.out.println(nums4);
 
 }
 }
