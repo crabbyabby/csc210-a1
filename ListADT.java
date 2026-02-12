@@ -81,6 +81,20 @@ public interface ListADT<T>{
      * @throws NullPointerException if element T to replace previous element is null
      */
     public T remove(int index);
+    
+    public String toString();
+
+    public DynamicArray<T> append(DynamicArray<T> newArray);
+
+    public DynamicArray<T> addAll(DynamicArray<T> newArray, int index);
+
+    public DynamicArray<T> splitSuffix(int index);
+
+    public DynamicArray<T> splitPrefix(int index);
+
+    public DynamicArray<T> delete(int fromIndex, int toIndex);
+
+    public DynamicArray<T> extract(int fromIndex, int toIndex);
 
     public static void main(String args[]){
     

@@ -1,12 +1,17 @@
 import javax.management.RuntimeErrorException;
 
 /**
- * TODO: Describe what this class represents and how it works at a high level
+ * DynamicArray is a list-like data structure that stores elements in a backing array.
+ * The DynamicArray holds a reference to the backing array.
+ * It keeps track of the number of elements currently stored.
+ * Elements can be accessed, added, removed, or modified by index, but the overall capacity cannot be changed.
  *
- * @param <T> TODO: Describe what type of elements this class can store
+ * @param <T> The type of elements stored in the array. Can be any primitive or object.
+ * Each DynamicArray's elements must all be the same type.
+ * 
  * @author Abigail Lei
  */
-public class DynamicArray<T>{
+public class DynamicArray<T> implements ListADT<T>{
 
     // Attributes
     private int capacity;
